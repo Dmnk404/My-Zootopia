@@ -35,16 +35,29 @@ def list_skin_types(animals):
 
 
 def main():
-    '''Main function'''
+    """Main function"""
+
     animals_data = load_data('animals_data.json')
     with open("animals_template.html", encoding="utf-8") as f:
         html_file = f.read()
     print("Choose a skin type.")
     print("Available skin types:")
-    f
+    skins = (list_skin_types(animals_data))
+    for skin in skins:
+        print(f"{skin} ", end="")
+    while True:
+        user_choice = input("").lower()
+        if user_choice in skins.lower():
+            user_animals = [
+                animal for animal in animals_data
+                if animal["characteristics"].get("skin_type") == user_choice]
+            break
+        else:
+            ("Invalid choice")
+            continue
     try:
         output = ""
-        for animal in animals_data:
+        for animal in user_animals:
             output += serialize_animal(animal)
 
         new_html = html_file.replace("__REPLACE_ANIMALS_INFO__", output)
