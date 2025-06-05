@@ -6,6 +6,7 @@ def load_data(file_path):
     return json.load(handle)
 
 def serialize_animal(animal_obj):
+    """ Serializes an animal object """
     output = ""
     output += '<li class="cards__item">'
     output += '<div class="card__title">'
@@ -23,10 +24,14 @@ def serialize_animal(animal_obj):
     if animal_obj.get("characteristics", {}).get("lifespan"):
         output += f"<li><strong>Lifespan</strong>: {animal_obj['characteristics']['lifespan']}</li>"
     output += "</ul></div></li>"
-
     return output
 
-
+def list_skin_types(animals):
+    skin_types = []
+    for animal in animals:
+        if animal.get("characteristics", {}).get("skin_type"):
+            skin_types.append(animal["characteristics"]["skin_type"])
+    return set(skin_types)
 
 
 def main():
@@ -34,7 +39,9 @@ def main():
     animals_data = load_data('animals_data.json')
     with open("animals_template.html", encoding="utf-8") as f:
         html_file = f.read()
-
+    print("Choose a skin type.")
+    print("Available skin types:")
+    f
     try:
         output = ""
         for animal in animals_data:
