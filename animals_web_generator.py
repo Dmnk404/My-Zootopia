@@ -5,6 +5,29 @@ def load_data(file_path):
   with open(file_path, "r") as handle:
     return json.load(handle)
 
+def serialize_animal(animal_obj):
+    output = ""
+    output += '<li class="cards__item">'
+    output += '<div class="card__title">'
+    output += f"{animal_obj['name']} </div>"
+    output += '<div class="card__text">'
+    output += "<ul>"
+    if animal_obj.get("characteristics", {}).get("diet"):
+        output += f"<li><strong>Diet</strong>: {animal_obj['characteristics']['diet']}</li>"
+    if animal_obj.get("locations"):
+        output += f"<li><strong>Location</strong>: {animal_obj['locations'][0]}</li>"
+    if animal_obj.get("characteristics", {}).get("type"):
+        output += f"<li><strong>Type</strong>: {animal_obj['characteristics']['type']}</li>"
+    if animal_obj.get("characteristics", {}).get("color"):
+        output += f"<li><strong>Color</strong>: {animal_obj['characteristics']['color']}</li>"
+    if animal_obj.get("characteristics", {}).get("lifespan"):
+        output += f"<li><strong>Lifespan</strong>: {animal_obj['characteristics']['lifespan']}</li>"
+    output += "</ul></div></li>"
+
+    return output
+
+
+
 
 def main():
     '''Main function'''
@@ -15,20 +38,7 @@ def main():
     try:
         output = ""
         for animal in animals_data:
-            output += '<li class="cards__item">'
-            output += '<div class="card__title">'
-            if "name" in animal:
-                output += f"{animal['name']}<br/>\n"
-            output += "</div>"
-            output += '<p class="card__text">'
-            if animal.get("characteristics", {}).get("diet"):
-                output += f"<strong>Diet</strong>: {animal['characteristics']['diet']}<br/>\n"
-            if animal.get("locations"):
-                output += f"<strong>Location</strong>: {animal['locations'][0]}<br/>\n"
-            if animal.get("characteristics", {}).get("type"):
-                output += f"<strong>Type</strong>: {animal['characteristics']['type']}<br/>\n"
-            output += "</p>"
-            output += "</li>"
+            output += serialize_animal(animal)
 
         new_html = html_file.replace("__REPLACE_ANIMALS_INFO__", output)
 
