@@ -30,7 +30,7 @@ def list_skin_types(animals):
     skin_types = []
     for animal in animals:
         if animal.get("characteristics", {}).get("skin_type"):
-            skin_types.append(animal["characteristics"]["skin_type"])
+            skin_types.append(animal["characteristics"]["skin_type"].lower())
     return set(skin_types)
 
 
@@ -47,13 +47,13 @@ def main():
         print(f"{skin} ", end="")
     while True:
         user_choice = input("").lower()
-        if user_choice in skins.lower():
+        if user_choice in skins:
             user_animals = [
                 animal for animal in animals_data
-                if animal["characteristics"].get("skin_type") == user_choice]
+                if animal["characteristics"].get("skin_type").lower() == user_choice]
             break
         else:
-            ("Invalid choice")
+            print("Invalid choice")
             continue
     try:
         output = ""
